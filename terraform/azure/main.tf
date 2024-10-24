@@ -23,14 +23,14 @@ resource "azurerm_virtual_network" "vnet2" {
 
 ##VPC PEERING
 
-resource "azurerm_virtual_network_peering" "vpcpeering" {
+resource "azurerm_virtual_network_peering" "vpcpeering1" {
   name                      = "peer10to20" 
 resource_group_name = azurerm_resource_group.rg.name 
 virtual_network_name = azurerm_virtual_network.vnet1.name  
 remote_virtual_network_id = azurerm_virtual_network.vnet2.id  
 }
 
-resource "azurerm_virtual_network_peering" "vpcpeering" {
+resource "azurerm_virtual_network_peering" "vpcpeering2" {
   name                      = "peer20to10" 
 resource_group_name = azurerm_resource_group.rg.name 
 virtual_network_name = azurerm_virtual_network.vnet2.name  
