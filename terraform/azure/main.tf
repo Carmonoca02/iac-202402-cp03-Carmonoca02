@@ -1,6 +1,6 @@
 ##RG
 resource "azurerm_resource_group" "rg" {
-    name     = "rg-staticsite-lb-multicloud-fernanda"
+    name     = "rg-recursosazurecp3"
     location = "brazilsouth"
 }
 
