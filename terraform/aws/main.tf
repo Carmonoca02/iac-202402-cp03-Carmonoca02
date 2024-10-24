@@ -80,7 +80,7 @@ resource "aws_route_table_association" "route_association2a" {
 
 ##SG
 
-resource "aws_security_group" "sg" {
+resource "aws_security_group" "sg1" {
     vpc_id = aws_vpc.vpc10.id
     egress {
         from_port   = 0
@@ -110,7 +110,7 @@ resource "aws_security_group" "sg" {
     }
 }
 
-resource "aws_security_group" "sg" {
+resource "aws_security_group" "sg2" {
     vpc_id = aws_vpc.vpc20.id
     egress {
         from_port   = 0
