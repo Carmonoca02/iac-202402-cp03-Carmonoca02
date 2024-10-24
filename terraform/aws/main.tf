@@ -139,3 +139,33 @@ resource "aws_security_group" "sg2" {
         cidr_blocks = ["0.0.0.0/0"]
     }
 }
+
+
+
+resource "aws_instance" "instance01" {
+    ami                    = "ami-0f409bae3775dc8e5"
+    instance_type          = "t2.micro"
+    subnet_id              = aws_subnet.subnet1a.id
+    vpc_security_group_ids = [aws_security_group.sg1.id]
+    user_data              = <<EOF
+        #!/bin/bash
+        yum update -y
+        yum install -y httpd
+        echo "staticsite-lb-multi-cloud - AWS - instance01" > /var/www/html/index.html
+        service httpd restart
+    EOF
+}
+
+resource "aws_instance" "instance02" {
+    ami                    = "ami-0f409bae3775dc8e5"
+    instance_type          = "t2.micro"
+    subnet_id              = aws_subnet.subnet2a.id
+    vpc_security_group_ids = [aws_security_group.sg2.id]
+    user_data              = <<EOF
+        #!/bin/bash
+        yum update -y
+        yum install -y httpd
+        echo "staticsite-lb-multi-cloud - AWS - instance02" > /var/www/html/index.html
+        service httpd restart
+    EOF
+}
