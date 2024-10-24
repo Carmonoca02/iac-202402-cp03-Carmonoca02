@@ -24,19 +24,36 @@ resource "azurerm_virtual_network" "vnet2" {
 ##VPC PEERING
 
 resource "azurerm_virtual_network_peering" "vpcpeering1" {
-  name                      = "peer10to20" 
-resource_group_name = azurerm_resource_group.rg.name 
-virtual_network_name = azurerm_virtual_network.vnet1.name  
-remote_virtual_network_id = azurerm_virtual_network.vnet2.id  
+  name                      = "peer10to20"
+  resource_group_name       = azurerm_resource_group.rg.name
+  virtual_network_name      = azurerm_virtual_network.vnet1.name
+  remote_virtual_network_id = azurerm_virtual_network.vnet2.id
+  allow_virtual_network_access = true
+  allow_forwarded_traffic      = true
+  allow_gateway_transit        = false
+  use_remote_gateways          = false
 }
 
 resource "azurerm_virtual_network_peering" "vpcpeering2" {
-  name                      = "peer20to10" 
-resource_group_name = azurerm_resource_group.rg.name 
-virtual_network_name = azurerm_virtual_network.vnet2.name  
-remote_virtual_network_id = azurerm_virtual_network.vnet1.id  
+  name                      = "peer20to10"
+  resource_group_name       = azurerm_resource_group.rg.name
+  virtual_network_name      = azurerm_virtual_network.vnet2.name
+  remote_virtual_network_id = azurerm_virtual_network.vnet1.id
+  allow_virtual_network_access = true
+  allow_forwarded_traffic      = true
+  allow_gateway_transit        = false
+  use_remote_gateways          = false 
 }
 
+resource "azurerm_subnet_network_security_group_association" "nsgsubnet1a" {
+    subnet_id                 = azurerm_subnet.subnet1a.id
+    network_security_group_id = azurerm_network_security_group.nsgvm.id
+}
+
+resource "azurerm_subnet_network_security_group_association" "nsgsubnet2a" {
+    subnet_id                 = azurerm_subnet.subnet2a.id
+    network_security_group_id = azurerm_network_security_group.nsgvm.id
+}
 
 resource "azurerm_subnet" "subnet1a" {
     name                 = "subnet1a"
@@ -78,16 +95,6 @@ resource "azurerm_network_security_group" "nsgvm" {
         source_address_prefix      = "*"
         destination_address_prefix = "*"
     }
-}
-
-resource "azurerm_subnet_network_security_group_association" "nsgsubnet1a" {
-    subnet_id                 = azurerm_subnet.subnet1a.id
-    network_security_group_id = azurerm_network_security_group.nsgvm.id
-}
-
-resource "azurerm_subnet_network_security_group_association" "nsgsubnet2a" {
-    subnet_id                 = azurerm_subnet.subnet2a.id
-    network_security_group_id = azurerm_network_security_group.nsgvm.id
 }
 
 resource "azurerm_network_interface" "vm01" {
