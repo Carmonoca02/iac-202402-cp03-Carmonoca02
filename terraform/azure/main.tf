@@ -30,6 +30,13 @@ virtual_network_name = azurerm_virtual_network.vnet1.name
 remote_virtual_network_id = azurerm_virtual_network.vnet2.id  
 }
 
+resource "azurerm_virtual_network_peering" "vpcpeering" {
+  name                      = "peer20to10" 
+resource_group_name = azurerm_resource_group.rg.name 
+virtual_network_name = azurerm_virtual_network.vnet2.name  
+remote_virtual_network_id = azurerm_virtual_network.vnet1.id  
+}
+
 
 resource "azurerm_subnet" "subnet1a" {
     name                 = "subnet1a"
@@ -112,6 +119,12 @@ resource "azurerm_availability_set" "asvm" {
     resource_group_name = azurerm_resource_group.rg.name
 }
 
+resource "azurerm_availability_set" "asvm2" {
+    name                = "asvm2"
+    location            = azurerm_resource_group.rg.location
+    resource_group_name = azurerm_resource_group.rg.name
+}
+
 resource "azurerm_virtual_machine" "vm01" {
     name                             = "vm01"
     location                         = azurerm_resource_group.rg.location
@@ -154,7 +167,7 @@ resource "azurerm_virtual_machine" "vm02" {
     location                         = azurerm_resource_group.rg.location
     resource_group_name              = azurerm_resource_group.rg.name
     network_interface_ids            = [azurerm_network_interface.vm02.id]
-    availability_set_id              = azurerm_availability_set.asvm.id
+    availability_set_id              = azurerm_availability_set.asvm2.id
     vm_size                          = "Standard_DS1_v2"
     delete_os_disk_on_termination    = true
     delete_data_disks_on_termination = true
