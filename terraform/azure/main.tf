@@ -6,7 +6,7 @@ resource "azurerm_resource_group" "rg" {
 
 ##VNET 1
 resource "azurerm_virtual_network" "vnet1" {
-    name                = "vnet"
+    name                = "vnet1"
     location            = azurerm_resource_group.rg.location
     resource_group_name = azurerm_resource_group.rg.name
     address_space       = ["10.0.0.0/16"]
@@ -14,7 +14,7 @@ resource "azurerm_virtual_network" "vnet1" {
 
 ##VNET 2
 resource "azurerm_virtual_network" "vnet2" {
-    name                = "vnet"
+    name                = "vnet2"
     location            = azurerm_resource_group.rg.location
     resource_group_name = azurerm_resource_group.rg.name
     address_space       = ["20.0.0.0/16"]
