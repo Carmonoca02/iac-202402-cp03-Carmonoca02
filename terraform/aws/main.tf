@@ -47,7 +47,7 @@ resource "aws_internet_gateway" "igw1" {
     vpc_id = aws_vpc.vpc10.id
 }
 
-resource "aws_route_table" "route" {
+resource "aws_route_table" "route1" {
     vpc_id = aws_vpc.vpc10.id
     route {
         cidr_block = "0.0.0.0/0"
@@ -59,7 +59,7 @@ resource "aws_internet_gateway" "igw2" {
     vpc_id = aws_vpc.vpc20.id
 }
 
-resource "aws_route_table" "route" {
+resource "aws_route_table" "route2" {
     vpc_id = aws_vpc.vpc20.id
     route {
         cidr_block = "0.0.0.0/0"
